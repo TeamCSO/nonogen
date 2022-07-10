@@ -114,50 +114,24 @@ class no_generator:
         Main loop for nonogram generator
         :return: True on success, False and stacktrace on failure | bool
         """
-        try:
-            self._resize()
+        self._resize()
 
-            self._pixel_matrix()
-            if self._colour:
-                self._rebase_on_palette()
-            else:
-                self._rebase_on_bw()
-                self._convert()
+        self._pixel_matrix()
+        if self._colour:
+            self._rebase_on_palette()
+        else:
+            self._rebase_on_bw()
+            self._convert()
 
-            self._clean_pixels()
+        self._clean_pixels()
 
-            self._indic_rows = no_generator._gen_indic_values(self._clean_rows)
-            self._indic_columns = no_generator._gen_indic_values(self._clean_columns)
-            print('rows:')
-            print(self._indic_rows)
-            print('columns:')
-            print(self._indic_columns)
-
-            # Generate and save solution
-            self._solution = self._new_image()
-
-            self._fill_solution_grid()
-            self._solution = self._visualize_grid(self._solution)
-            self._save_solution()
-
-            # Generate and save nonogram
-            extra_height = max([len(column) for column in self._indic_columns])
-            extra_width = max([len(row) for row in self._indic_rows])
-            self._nonogram = self._new_image(width=(int(self._size[0]) + 2 + extra_width) * self._m,
-                                             height=(int(self._size[1]) + 2 + extra_height) * self._m)
-
-            self._nonogram = self._visualize_grid(self._nonogram, extra_width * self._m, extra_height * self._m)
-            self._nonogram = self._indic_boxes(self._nonogram, extra_width * self._m, extra_height * self._m)
-
-            self._save_nonogram()
-
-            return True
-        except Exception as e:
-            print(f"Something went wrong. \nThe error: {e}")
-
-            traceback.print_exc()
-
-            return False
+        self._indic_rows = no_generator._gen_indic_values(self._clean_rows)
+        self._indic_columns = no_generator._gen_indic_values(self._clean_columns)
+        print('rows:')
+        print(self._indic_rows)
+        print('columns:')
+        print(self._indic_columns)
+        return True
 
     def _clean_pixels(self) -> None:
         """
