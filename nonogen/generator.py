@@ -128,6 +128,10 @@ class no_generator:
 
             self._indic_rows = no_generator._gen_indic_values(self._clean_rows)
             self._indic_columns = no_generator._gen_indic_values(self._clean_columns)
+            print('rows:')
+            print(self._indic_rows)
+            print('columns:')
+            print(self._indic_columns)
 
             # Generate and save solution
             self._solution = self._new_image()
